@@ -2,121 +2,151 @@ package inventory;
 
 import java.util.Scanner;
 
-/**
- * Main class providing command-line interface for the inventory system.
- * TODO: Implement a complete menu-driven CLI application.
- *
- * Requirements:
- * - Menu with 6 options: Add, View, Sell, Stock, Statistics, Exit
- * - Input validation and error handling
- * - Sample data for testing
- * - User-friendly interface
- */
 public class Main {
 
-    // TODO: Declare class-level variables
-     private static InventoryManager manager;
-     private static Scanner scanner;
+    private static InventoryManager manager;
+    private static Scanner scanner;
 
-    /**
-     * TODO: Implement main method
-     */
     public static void main(String[] args) {
-        // TODO: Initialize manager and scanner
-        // Load sample data
-        // Start main application loop
+
+        manager = new InventoryManager();
+        scanner = new Scanner(System.in);
+
+        loadSampleData();
+
+        boolean running = true;
 
         System.out.println("Welcome to Inventory Management System!");
-        // loadSampleData();
 
-        // TODO: Implement main loop
-         while (true) {
-             showMenu();
-             int choice = getChoice();
-             handleChoice(choice);
-         }
+        while (running) {
+            showMenu();
+            int choice = getChoice();
+            running = handleChoice(choice);
+        }
+
+        System.out.println("Exiting... Goodbye!");
+        scanner.close();
     }
 
-    /**
-     * TODO: Load sample data for testing
-     */
     private static void loadSampleData() {
-        // TODO: Add sample products for testing
-//         Example: Books and Electronics with different prices
-         manager.addProduct("B001", "Java Programming", "BOOK", 29.99, 10);
-         manager.addProduct("B002", "Design Patterns", "BOOK", 35.50, 8);
-         manager.addProduct("E001", "Laptop", "ELECTRONICS", 999.99, 5);
-         manager.addProduct("E002", "Mouse", "ELECTRONICS", 25.99, 15);
+        manager.addProduct("B001", "Java Programming", "BOOK", 29.99, 10);
+        manager.addProduct("B002", "Design Patterns", "BOOK", 35.50, 8);
+        manager.addProduct("E001", "Laptop", "ELECTRONICS", 999.99, 5);
+        manager.addProduct("E002", "Mouse", "ELECTRONICS", 25.99, 15);
     }
 
-    /**
-     * TODO: Display main menu options
-     */
     private static void showMenu() {
-        // TODO: Display formatted menu
-        // 1. Add Product
-        // 2. View Inventory
-        // 3. Sell Product
-        // 4. Add Stock
-        // 5. View Statistics
-        // 6. Exit
+        System.out.println("\n=== MAIN MENU ===");
+        System.out.println("1. Add Product");
+        System.out.println("2. View Inventory");
+        System.out.println("3. Sell Product");
+        System.out.println("4. Add Stock");
+        System.out.println("5. View Statistics");
+        System.out.println("6. Exit");
     }
 
-    /**
-     * TODO: Get user choice with input validation
-     * @return user's menu choice
-     */
     private static int getChoice() {
-        // TODO: Implement input validation
-        // Handle invalid input gracefully
-        // Return valid choice between 1-6
-        return 0; // Placeholder
+        while (true) {
+            try {
+                System.out.print("Enter choice (1-6): ");
+                int choice = Integer.parseInt(scanner.nextLine());
+
+                if (choice >= 1 && choice <= 6) {
+                    return choice;
+                } else {
+                    System.out.println("Please enter a number between 1 and 6.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter a number.");
+            }
+        }
     }
 
-    /**
-     * TODO: Handle user menu choice
-     * @param choice - user's selected option
-     */
-    private static void handleChoice(int choice) {
-        // TODO: Implement switch statement for menu options
-        // case 1: addProduct(); break;
-        // case 2: manager.viewInventory(); break;
-        // case 3: sellProduct(); break;
-        // case 4: addStock(); break;
-        // case 5: manager.viewStatistics(); break;
-        // case 6: exit application
-        // default: invalid choice message
+    private static boolean handleChoice(int choice) {
+
+        switch (choice) {
+            case 1:
+                addProduct();
+                break;
+
+            case 2:
+                manager.viewInventory();
+                break;
+
+            case 3:
+                sellProduct();
+                break;
+
+            case 4:
+                addStock();
+                break;
+
+            case 5:
+                manager.viewStatistics();
+                break;
+
+            case 6:
+                return false;
+
+            default:
+                System.out.println("Invalid choice.");
+        }
+
+        return true;
     }
 
-    /**
-     * TODO: Handle adding new product
-     */
     private static void addProduct() {
-        // TODO: Get product details from user input
-        // Prompt for: id, name, type, price, quantity
-        // Call manager.addProduct() with inputs
+        String id = getStringInput("Enter Product ID: ");
+        String name = getStringInput("Enter Product Name: ");
+        String type = getStringInput("Enter Type (BOOK/ELECTRONICS): ");
+        double price = getDoubleInput("Enter Price: ");
+        int quantity = getIntInput("Enter Quantity: ");
+
+        manager.addProduct(id, name, type, price, quantity);
+        System.out.println("Product added successfully!");
     }
 
-    /**
-     * TODO: Handle selling product
-     */
     private static void sellProduct() {
-        // TODO: Get sale details from user input
-        // Prompt for: product ID, quantity, discount type
-        // Call manager.sellProduct() with inputs
+        String id = getStringInput("Enter Product ID: ");
+        int quantity = getIntInput("Enter Quantity to Sell: ");
+
+//        manager.sellProduct(id, quantity,);
     }
 
-    /**
-     * TODO: Handle adding stock
-     */
     private static void addStock() {
-        // TODO: Get stock details from user input
-        // Prompt for: product ID, quantity to add
-        // Call manager.addStock() with inputs
+        String id = getStringInput("Enter Product ID: ");
+        int quantity = getIntInput("Enter Quantity to Add: ");
+
+        manager.addStock(id, quantity);
     }
 
-    // TODO: Add helper methods for input validation
-    // private static String getStringInput(String prompt) { }
-    // private static int getIntInput(String prompt) { }
-    // private static double getDoubleInput(String prompt) { }
+    // ---------- Helper Methods ----------
+
+    private static String getStringInput(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine();
+    }
+
+    private static int getIntInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number. Try again.");
+            }
+        }
+    }
+
+    private static double getDoubleInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number. Try again.");
+            }
+        }
+    }
 }

@@ -17,6 +17,11 @@ class ProductFactoryTest {
         // TODO: Create a book with valid parameters
         // Assert that product is created successfully
         // Verify all properties are set correctly
+        Product book = ProductFactory.createProduct("1", "Java Book", "BOOK", 12.9, 99);
+        assertNotNull(book);
+        assertEquals("BOO1", book.getPrice());
+        assertEquals("BOOK", book.getPrice());
+        assertEquals(12.9, book.getPrice());
     }
 
     /**
