@@ -33,6 +33,9 @@ public class ProductFactory {
         // Step 1: Validate product type
         // Check if type is either BOOK_TYPE or ELECTRONICS_TYPE
         // Throw IllegalArgumentException if invalid
+        if(type == null) {
+            throw new IllegalArgumentException("Invalid product type: " + type);
+        }
         
         if (!type.equals(BOOK_TYPE) && !type.equals(ELECTRONICS_TYPE)) {
             throw new IllegalArgumentException("Invalid product type: " + type);

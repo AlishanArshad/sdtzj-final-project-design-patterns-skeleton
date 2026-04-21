@@ -15,8 +15,8 @@ import java.util.Scanner;
 public class Main {
 
     // TODO: Declare class-level variables
-    // private static InventoryManager manager;
-    // private static Scanner scanner;
+     private static InventoryManager manager;
+     private static Scanner scanner;
 
     /**
      * TODO: Implement main method
@@ -30,11 +30,11 @@ public class Main {
         // loadSampleData();
 
         // TODO: Implement main loop
-        // while (true) {
-        //     showMenu();
-        //     int choice = getChoice();
-        //     handleChoice(choice);
-        // }
+         while (true) {
+             showMenu();
+             int choice = getChoice();
+             handleChoice(choice);
+         }
     }
 
     /**
@@ -42,11 +42,11 @@ public class Main {
      */
     private static void loadSampleData() {
         // TODO: Add sample products for testing
-        // Example: Books and Electronics with different prices
-        // manager.addProduct("B001", "Java Programming", "BOOK", 29.99, 10);
-        // manager.addProduct("B002", "Design Patterns", "BOOK", 35.50, 8);
-        // manager.addProduct("E001", "Laptop", "ELECTRONICS", 999.99, 5);
-        // manager.addProduct("E002", "Mouse", "ELECTRONICS", 25.99, 15);
+//         Example: Books and Electronics with different prices
+         manager.addProduct("B001", "Java Programming", "BOOK", 29.99, 10);
+         manager.addProduct("B002", "Design Patterns", "BOOK", 35.50, 8);
+         manager.addProduct("E001", "Laptop", "ELECTRONICS", 999.99, 5);
+         manager.addProduct("E002", "Mouse", "ELECTRONICS", 25.99, 15);
     }
 
     /**
